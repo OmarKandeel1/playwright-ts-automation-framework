@@ -1,6 +1,6 @@
 import { test, expect, request } from '@playwright/test';
-import { Booking } from '../../API/Restful-booker/booking.ts';
-import bookingData from '../../test-data/Restful-booker/booking-data.ts';
+import { Booking } from '../../API/Restful-booker/Booking';
+import bookingData from '../../test-data/Restful-booker/booking-data.js';
 
 
 test.describe('Booking Api tests', () => {
