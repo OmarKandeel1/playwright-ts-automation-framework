@@ -12,6 +12,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  globalSetup: './global.setup.ts',
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -27,18 +28,53 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL: 'https://opensource-demo.orangehrmlive.com',
+    //storageState: 'playwright/.auth/admin.json',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    headless : true
+    headless: true
   },
 
   /* Configure projects for major browsers */
   projects: [
+    // {
+    //   name: 'ui',
+    //   testDir: './tests/UI',
+    //   use: {
+    //     baseURL: 'https://opensource-demo.orangehrmlive.com',
+    //     storageState: 'playwright/.auth/admin.json',
+    //     trace: 'on-first-retry',
+    //     headless: true
+    //   }
+    // },
+
+    // {
+    //   name: 'api',
+    //   testDir: './tests/API',
+    //   use: {
+    //     baseURL: 'https://opensource-demo.orangehrmlive.com',
+    //     storageState: undefined
+    //   }
+    // },
+
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'ui',
+      testDir: './tests/UI',
+      use: {
+        storageState: '.auth/admin.json'
+      }
+    },
+    {
+      name: 'api',
+      testDir: './tests/API',
+      use: {
+        storageState: undefined
+      }
     },
 
     // {

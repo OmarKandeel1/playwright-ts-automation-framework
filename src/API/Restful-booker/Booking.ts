@@ -1,6 +1,6 @@
 import { APIRequestContext, APIResponse, expect } from "@playwright/test";
 import { Constants } from "./Constants";
-import bookingData from "../../test-data/Restful-booker/booking-data";
+import bookingData from "../../../test-data/Restful-booker/booking-data";
 export class Booking {
     
     constructor(private request: APIRequestContext) {

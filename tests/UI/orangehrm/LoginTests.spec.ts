@@ -1,7 +1,7 @@
 import { test, expect, request } from '@playwright/test';
-import { LoginPage } from '../../../UI/pages/orangehrm/LoginPage';
+import { LoginPage } from '../../../src/UI/orangehrm/pages/LoginPage';
 import tsData from '../../../test-data/OrangeHRM/login-users'
-import { log } from 'node:console';
+
 
 let loginPage: LoginPage;
 test.beforeEach(async ({ page }) => {
@@ -15,12 +15,14 @@ const inValidUsers = tsData.invalidUsers;
 
 test.describe('OrangeHRM Login',()=>{
 
+    test.use({ storageState: undefined });
+
 for(const {username , password} of validUsers){
     test(`Validating successful Login with username: ${username} , password: ${password}`, async () => {
 
-        await loginPage.login(username, password);
-        await loginPage.checkNavigate();
-        await loginPage.checkDashboard();
+        const dashboardPage = await loginPage.login(username, password);
+        await dashboardPage.checkDashboard();
+
     });
 }
 
