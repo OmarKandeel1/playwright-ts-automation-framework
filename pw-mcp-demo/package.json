@@ -1,0 +1,17 @@
+{
+  "name": "pw-mcp-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/mcp": "^0.0.76",
+    "@playwright/test": "^1.61.0"
+  }
+}

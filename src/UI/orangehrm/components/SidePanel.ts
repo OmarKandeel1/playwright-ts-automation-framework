@@ -1,5 +1,5 @@
 import { type Locator, type Page } from '@playwright/test';
-import { PIMPage } from '../pages/PIMPage';
+import { PimPage } from '../pages/PIMPage';
 
 export class SidePanel {
 
@@ -17,7 +17,7 @@ export class SidePanel {
 
     async openPIM() {
         await this.pimLink.click();
-        return new PIMPage(this.page);
+        return new PimPage(this.page);
     }
 
 

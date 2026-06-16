@@ -223,6 +223,30 @@ Three projects are defined in `playwright.config.ts`:
 
 ---
 
+## 🤖 AI-Assisted Test Generation (Playwright MCP)
+
+This project integrates with **[`@playwright/mcp`](https://github.com/microsoft/playwright-mcp)** — Playwright's Model Context Protocol server — enabling AI coding assistants like **GitHub Copilot** to observe live browser state and generate test cases interactively.
+
+### How it works
+
+Rather than describing a page to the AI from memory, Playwright MCP lets the agent **navigate the actual app** and inspect its state in real time — resulting in more accurate locators and realistic test scenarios.
+
+### Structured Agent Prompt (`test_prompt.md`)
+
+To keep AI-generated code consistent with the project's architecture, a dedicated **agent prompt file** ([`test_prompt.md`](test_prompt.md)) acts as a rulebook for the AI before it writes a single line of code. It enforces:
+
+| Rule | Constraint |
+|------|------------|
+| 📁 File placement | Strict directory mapping for pages, components, specs, and data files |
+| 🧱 Page Object structure | Locator declarations, constructor init, fluent chaining conventions |
+| 🔗 Route safety | No hardcoded URLs — all routes must reference `ROUTES` constants |
+| 📊 Data-driven tests | Test inputs must live in `test-data/` files, never inline |
+| ♻️ Reuse over duplication | Existing Page Objects must be extended, not recreated |
+
+**Used for:** Generating `Dashboard.spec.ts` UI test cases by letting Copilot observe the live OrangeHRM dashboard via MCP and follow the structured prompt constraints.
+
+---
+
 ## 🚀 Getting Started
 
 ### Prerequisites
