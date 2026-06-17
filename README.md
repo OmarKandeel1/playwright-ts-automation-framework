@@ -283,6 +283,53 @@ npx playwright show-report
 
 ---
 
+## 🐳 Docker
+
+A `Dockerfile` is included so the entire test suite can run inside a container — no local Node.js or browser installation required.
+
+### What the image does
+
+| Step | Instruction | Purpose |
+|------|-------------|----------|
+| Base image | `mcr.microsoft.com/playwright:v1.60.0-jammy` | Official Playwright image with all browser dependencies pre-installed |
+| Working dir | `/app` | Clean isolated workspace |
+| Install deps | `npm install` | Installs all project dependencies |
+| Copy source | `COPY . .` | Copies all project files into the image |
+| Install browsers | `npx playwright install --with-deps` | Installs Playwright browsers inside the container |
+| Default command | `npx playwright test` | Runs the full test suite on container start |
+
+### Build the image
+
+```bash
+docker build -t playwright-ts-orangehrm .
+```
+
+### Run the full test suite
+
+```bash
+docker run --rm playwright-ts-orangehrm
+```
+
+### Run a specific project
+
+```bash
+# API tests only
+docker run --rm playwright-ts-orangehrm npx playwright test --project=api
+
+# UI tests only
+docker run --rm playwright-ts-orangehrm npx playwright test --project=ui
+```
+
+### Extract the HTML report after the run
+
+```bash
+docker run --rm -v "$(pwd)/playwright-report:/app/playwright-report" playwright-ts-orangehrm
+```
+
+> The report will be written to `./playwright-report` on your host machine and can be opened with `npx playwright show-report`.
+
+---
+
 ## 🔄 CI/CD — GitHub Actions
 
 The pipeline runs automatically on every push or pull request to `main`/`master`.
@@ -318,6 +365,7 @@ The pipeline runs automatically on every push or pull request to `main`/`master`
 - **Storage State reuse** — login is performed once in `global.setup.ts` and the session is shared across all UI tests, avoiding repeated login steps
 - **Centralized routes** — all URL paths live in `src/config/orangehrm/routes.ts`, so any URL change requires only one edit
 - **API helper classes** — `LoginApi` and `Booking` classes abstract raw `request.*` calls, keeping test specs clean and readable
+- **Docker support** — the official `mcr.microsoft.com/playwright` base image is used so the suite runs identically in any environment without manual browser setup
 
 ---
 
